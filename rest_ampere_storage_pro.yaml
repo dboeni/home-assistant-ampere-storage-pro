@@ -1,0 +1,87 @@
+sensor:
+  #Total battery Discharge in kwh
+  - platform: rest
+    resource: http://[IP]/rest/items/sajhybrid_battery_94_[SN]_battery_totalDischargeEnergy
+    name: Ampere Battery TotalDischargeEnergy
+    unique_id: ampere_battery_totalDischargeEnergy
+    value_template: '{{ value_json.state | regex_replace("([^\d.-]+)","") | float }}'
+    unit_of_measurement: "kWh"
+    device_class: energy
+    state_class: total_increasing
+    scan_interval: 15
+
+  #Total Battery Charge in kwh
+  - platform: rest
+    resource: http://[IP]/rest/items/sajhybrid_battery_94_[SN]_battery_totalChargeEnergy
+    name: Ampere Battery TotalChargeEnergy
+    unique_id: ampere_battery_totalChargeEnergy
+    value_template: '{{ value_json.state | regex_replace("([^\d.-]+)","") | float }}'
+    unit_of_measurement: "kWh"
+    device_class: energy
+    state_class: total_increasing
+    scan_interval: 15
+
+  #Batttery charge/Discharge in W with negatives inverted for right Dashboard functionality
+  - platform: rest
+    resource: http://[IP]/rest/items/sajhybrid_battery_94_[SN]_battery_power
+    name: Ampere Battery Power
+    unique_id: ampere_battery_power
+    value_template: '{{ (value_json.state.split(" ")[0] | float) * -1 }}'
+    unit_of_measurement: "W"
+    device_class: energy
+    state_class: measurement
+    scan_interval: 15
+
+  #Powermeterhouse in W
+  - platform: rest
+    resource: http://[IP]/rest/items/sajhybrid_powermeter_94_[SN]_powermeter_realPower
+    name: Ampere Powermeter RealPower
+    unique_id: ampere_powermeter_realPower
+    value_template: '{{ value_json.state | regex_replace("([^\d.]+)","") | float }}'
+    unit_of_measurement: "W"
+    device_class: energy
+    state_class: measurement
+    scan_interval: 15
+
+  #Solar power in W
+  - platform: rest
+    resource: http://[IP]/rest/items/sajhybrid_inverter_94_[SN]_inverter_pvPower
+    name: Ampere Inverter PvPower
+    unique_id: ampere_inverter_pvPower
+    value_template: '{{ value_json.state | regex_replace("([^\d.]+)","") | float }}'
+    unit_of_measurement: "W"
+    device_class: energy
+    state_class: measurement
+    scan_interval: 15
+
+  #State Of Charge Battery in %
+  - platform: rest
+    resource: http://[IP]/rest/items/sajhybrid_battery_94_[SN]_battery_stateOfCharge
+    name: Ampere Battery StateOfCharge
+    unique_id: ampere_battery_stateOfCharge
+    value_template: '{{ value_json.state | regex_replace("([^\d.]+)","") | float }}'
+    unit_of_measurement: "%"
+    device_class: battery
+    state_class: measurement
+    scan_interval: 15
+
+  #Powerneter Import Export
+  - platform: rest
+    resource: http://[IP]/rest/items/sajhybrid_powermeter_94_[SN]_powermeter_totalExport
+    name: Ampere Grid TotalExport
+    unique_id: ampere_grid_totalExport
+    value_template: "{{(value_json.state.split(' ')[0] | float) * (0.00000027777)  }}"
+    unit_of_measurement: "kWh"
+    device_class: energy
+    state_class: total_increasing
+    scan_interval: 15
+
+  - platform: rest
+    resource: http://[IP]/rest/items/sajhybrid_powermeter_94_[SN]_powermeter_totalImport
+    name: Ampere Grid TotalImport
+    unique_id: ampere_grid_totalImport
+    value_template: "{{ value_json.state[:-2] | float | multiply(0.00000027777)  }}"
+    unit_of_measurement: "kWh"
+    device_class: energy
+    state_class: total_increasing
+    scan_interval: 15
