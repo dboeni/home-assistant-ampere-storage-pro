@@ -9,9 +9,13 @@ There are two ways to read the data from an Ampere.Storage.Pro. Both options are
 - Ip addresses of inverter and IQ box (optional)
 
 # Variant 1:
-The inverter can be read out via Modbus TCP (port 502). 
+The inverter can be read out via Modbus TCP (port 502).
+Is under construction
 
 # Variant 2:
 The Ampere.IQ Box can be read out via a REST interface.
+The following placeholders must be replaced in the [modbus_ampere_storage_pro.yaml](modbus_ampere_storage_pro.yaml) file:
+- [IP]: Ip address of the Ampere.IQ Box
+- [SN]: Serial number of the inverter. This can be read out using this REST URL: http://[IP]/rest/things
 
 # Integrate into HomeAssistant
