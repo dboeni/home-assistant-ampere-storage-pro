@@ -19,3 +19,13 @@ The following placeholders must be replaced in the [rest_ampere_storage_pro.yaml
 - [SN]: Serial number of the inverter. This can be read out using this REST URL: http://[IP]/rest/things
 
 # Integrate into HomeAssistant
+Copy the YAML file of the selected variant into the "integrations" directory.
+
+Include "modbus_sungrow.yaml" by adding the follwing lines to your "configuration.yaml":
+
+```
+homeassistant:
+  packages: !include_dir_named integrations
+```
+
+Now check your configuration (Developer Tools -> "check configuration" and perform a restart. The entries will then be available.
