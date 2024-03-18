@@ -1,87 +1,429 @@
-sensor:
-  #Total battery Discharge in kwh
-  - platform: rest
-    resource: http://[IP]/rest/items/sajhybrid_battery_94_[SN]_battery_totalDischargeEnergy
-    name: Ampere Battery TotalDischargeEnergy
-    unique_id: ampere_battery_totalDischargeEnergy
-    value_template: '{{ value_json.state | regex_replace("([^\d.-]+)","") | float }}'
-    unit_of_measurement: "kWh"
-    device_class: energy
-    state_class: total_increasing
-    scan_interval: 15
+modbus:
+  - name: AmpereStoragePro
+    type: tcp
+    host: !secret ampere-storage-pro-host-ip
+    port: 502
 
-  #Total Battery Charge in kwh
-  - platform: rest
-    resource: http://[IP]/rest/items/sajhybrid_battery_94_[SN]_battery_totalChargeEnergy
-    name: Ampere Battery TotalChargeEnergy
-    unique_id: ampere_battery_totalChargeEnergy
-    value_template: '{{ value_json.state | regex_replace("([^\d.-]+)","") | float }}'
-    unit_of_measurement: "kWh"
-    device_class: energy
-    state_class: total_increasing
-    scan_interval: 15
 
-  #Batttery charge/Discharge in W with negatives inverted for right Dashboard functionality
-  - platform: rest
-    resource: http://[IP]/rest/items/sajhybrid_battery_94_[SN]_battery_power
-    name: Ampere Battery Power
-    unique_id: ampere_battery_power
-    value_template: '{{ (value_json.state.split(" ")[0] | float) * -1 }}'
-    unit_of_measurement: "W"
-    device_class: energy
-    state_class: measurement
-    scan_interval: 15
+    sensors:
+      - name: PV1 Voltage
+        unique_id: ampere_pv1_voltage
+        device_address: !secret ampere-storage-pro-device-address
+        address: 517
+        input_type: input
+        data_type: int16
+        precision: 0
+        unit_of_measurement: V
+        device_class: Voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
 
-  #Powermeterhouse in W
-  - platform: rest
-    resource: http://[IP]/rest/items/sajhybrid_powermeter_94_[SN]_powermeter_realPower
-    name: Ampere Powermeter RealPower
-    unique_id: ampere_powermeter_realPower
-    value_template: '{{ value_json.state | regex_replace("([^\d.]+)","") | float }}'
-    unit_of_measurement: "W"
-    device_class: energy
-    state_class: measurement
-    scan_interval: 15
+      - name: PV1 Current
+        unique_id: ampere_pv1_current
+        device_address: !secret ampere-storage-pro-device-address
+        address: 518
+        input_type: input
+        data_type: int16
+        precision: 2
+        unit_of_measurement: A
+        device_class: Current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
 
-  #Solar power in W
-  - platform: rest
-    resource: http://[IP]/rest/items/sajhybrid_inverter_94_[SN]_inverter_pvPower
-    name: Ampere Inverter PvPower
-    unique_id: ampere_inverter_pvPower
-    value_template: '{{ value_json.state | regex_replace("([^\d.]+)","") | float }}'
-    unit_of_measurement: "W"
-    device_class: energy
-    state_class: measurement
-    scan_interval: 15
+      - name: PV1 Power
+        unique_id: ampere_pv1_power
+        device_address: !secret ampere-storage-pro-device-address
+        address: 519
+        input_type: input
+        data_type: int16
+        precision: 0
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        scale: 1
+        scan_interval: 10
 
-  #State Of Charge Battery in %
-  - platform: rest
-    resource: http://[IP]/rest/items/sajhybrid_battery_94_[SN]_battery_stateOfCharge
-    name: Ampere Battery StateOfCharge
-    unique_id: ampere_battery_stateOfCharge
-    value_template: '{{ value_json.state | regex_replace("([^\d.]+)","") | float }}'
-    unit_of_measurement: "%"
-    device_class: battery
-    state_class: measurement
-    scan_interval: 15
+      - name: PV2 Voltage
+        unique_id: ampere_pv2_voltage
+        device_address: !secret ampere-storage-pro-device-address
+        address: 520
+        input_type: input
+        data_type: int16
+        precision: 0
+        unit_of_measurement: V
+        device_class: Voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
 
-  #Powerneter Import Export
-  - platform: rest
-    resource: http://[IP]/rest/items/sajhybrid_powermeter_94_[SN]_powermeter_totalExport
-    name: Ampere Grid TotalExport
-    unique_id: ampere_grid_totalExport
-    value_template: "{{(value_json.state.split(' ')[0] | float) * (0.00000027777)  }}"
-    unit_of_measurement: "kWh"
-    device_class: energy
-    state_class: total_increasing
-    scan_interval: 15
+      - name: PV2 Current
+        unique_id: ampere_pv2_current
+        device_address: !secret ampere-storage-pro-device-address
+        address: 521
+        input_type: input
+        data_type: int16
+        precision: 2
+        unit_of_measurement: A
+        device_class: Current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 10
 
-  - platform: rest
-    resource: http://[IP]/rest/items/sajhybrid_powermeter_94_[SN]_powermeter_totalImport
-    name: Ampere Grid TotalImport
-    unique_id: ampere_grid_totalImport
-    value_template: "{{ value_json.state[:-2] | float | multiply(0.00000027777)  }}"
-    unit_of_measurement: "kWh"
-    device_class: energy
-    state_class: total_increasing
-    scan_interval: 15
+      - name: PV2 Power
+        unique_id: ampere_pv2_power
+        device_address: !secret ampere-storage-pro-device-address
+        address: 522
+        input_type: input
+        data_type: int16
+        precision: 0
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        scale: 1
+        scan_interval: 10
+
+      - name: Battery Level
+        unique_id: ampere_battery_level
+        device_address: !secret ampere-storage-pro-device-address
+        address: 1339
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: "%"
+        device_class: battery
+        state_class: measurement
+        scale: 1
+        scan_interval: 60
+
+      - name: Battery Running state
+        unique_id: ampere_battery_running_state
+        device_address: !secret ampere-storage-pro-device-address
+        address: 1340
+        input_type: input
+        data_type: uint16
+        precision: 0
+        state_class: measurement
+        scale: 1
+        scan_interval: 10
+
+      - name: Battery Voltage
+        unique_id: ampere_battery_voltage
+        device_address: !secret ampere-storage-pro-device-address
+        address: 531
+        input_type: input
+        data_type: int16
+        precision: 0
+        unit_of_measurement: V
+        device_class: Voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 10
+
+      - name: Battery Current
+        unique_id: ampere_battery_current
+        device_address: !secret ampere-storage-pro-device-address
+        address: 532
+        input_type: input
+        data_type: int16
+        precision: 2
+        unit_of_measurement: A
+        state_class: measurement
+        device_class: Current
+        scale: 0.01
+        scan_interval: 10
+
+      - name: Battery Power
+        unique_id: ampere_battery_power
+        device_address: !secret ampere-storage-pro-device-address
+        address: 535
+        input_type: input
+        data_type: int16
+        precision: 0
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        scale: 1
+        scan_interval: 10
+
+      - name: Battery Temperature
+        unique_id: ampere_battery_temperature
+        device_address: !secret ampere-storage-pro-device-address
+        address: 1344
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: °C
+        device_class: Temperature
+        scale: 0.1
+        scan_interval: 60
+
+      - name: Total active power
+        unique_id: total_active_power
+        device_address: !secret ampere-storage-pro-device-address
+        address: 1348
+        input_type: input
+        data_type: int16
+        precision: 0
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        scale: 1
+        scan_interval: 10
+
+      - name: L1 active power
+        unique_id: l1_active_power
+        device_address: !secret ampere-storage-pro-device-address
+        address: 1349
+        input_type: input
+        data_type: int16
+        precision: 0
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        scale: 1
+        scan_interval: 10
+
+      - name: L2 active power
+        unique_id: l2_active_power
+        device_address: !secret ampere-storage-pro-device-address
+        address: 1350
+        input_type: input
+        data_type: int16
+        precision: 0
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        scale: 1
+        scan_interval: 10
+
+      - name: L3 active power
+        unique_id: l3_active_power
+        device_address: !secret ampere-storage-pro-device-address
+        address: 1351
+        input_type: input
+        data_type: int16
+        precision: 0
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        scale: 1
+        scan_interval: 10
+
+      - name: Daily PV Generation
+        unique_id: ampere_daily_pv_generation
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16576
+        input_type: input
+        data_type: uint16
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Monthly PV generation
+        unique_id: ampere_monthly_pv_generation
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16577
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Year PV generation
+        unique_id: ampere_year_pv_generation
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16579
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Total PV generation
+        unique_id: ampere_total_pv_generation
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16581
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Daily Battery Charge
+        unique_id: ampere_daily_battery_charge
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16583
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Monthly Battery Charge
+        unique_id: ampere_monthly_battery_charge
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16585
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Year Battery Charge
+        unique_id: ampere_year_battery_charge
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16587
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Total Battery Charge
+        unique_id: ampere_total_battery_charge
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16589
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Daily Battery Discharge
+        unique_id: ampere_daily_battery_discharge
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16591
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total_increasing
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Monthly Battery Discharge
+        unique_id: ampere_monthly_battery_discharge
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16593
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Year Battery Discharge
+        unique_id: ampere_year_battery_discharge
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16595
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Total Battery Discharge
+        unique_id: ampere_total_battery_discharge
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16597
+        input_type: input
+        data_type: uint32
+        precision: 2
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: total
+        scale: 0.01
+        scan_interval: 600
+
+      - name: BMS Software Version
+        unique_id: ampere_bms_software_version
+        device_address: !secret ampere-storage-pro-device-address
+        address: 33061
+        input_type: input
+        data_type: int16
+        precision: 0
+        scale: 0.01
+        scan_interval: 600
+
+      - name: BMS Hardware Version
+        unique_id: ampere_bms_hardware_version
+        device_address: !secret ampere-storage-pro-device-address
+        address: 33062
+        input_type: input
+        data_type: int16
+        precision: 0
+        scale: 0.01
+        scan_interval: 600
+
+      - name: Batterycluster
+        unique_id: ampere_battery_cluster
+        device_address: !secret ampere-storage-pro-device-address
+        address: 33063
+        input_type: input
+        data_type: string
+        count: 6
+        scan_interval: 600
+
+      - name: Inverter Modell
+        unique_id: ampere_inverter_model
+        device_address: !secret ampere-storage-pro-device-address
+        address: 33280
+        input_type: input
+        data_type: string
+        count: 7
+        scan_interval: 600
+
+      - name: Inverter SN
+        unique_id: ampere_inverter_sn
+        device_address: !secret ampere-storage-pro-device-address
+        address: 36611
+        input_type: input
+        data_type: string
+        count: 9
+        scan_interval: 600
+
+template:
+  - sensor:
+      - name: Inverter power
+        unique_id: ampere_inverter_power
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        availability: >-
+          {{ 
+          not is_state('sensor.pv1_power', 'unavailable') 
+          and not is_state('sensor.pv2_power', 'unavailable') 
+          }}
+        state: "{{ (states('sensor.pv1_power') | int + states('sensor.pv2_power') | int ) | int }}"

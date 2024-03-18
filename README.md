@@ -10,7 +10,7 @@ There are two ways to read the data from an Ampere.Storage.Pro. Both options are
 
 # Variant 1:
 The inverter can be read out via Modbus TCP (port 502).
-Is under construction
+Add or update the values from secrets.yaml to your Home Assistant.
 
 # Variant 2:
 The Ampere.IQ Box can be read out via a REST interface.
