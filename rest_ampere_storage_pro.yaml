@@ -85,3 +85,13 @@ sensor:
     device_class: energy
     state_class: total_increasing
     scan_interval: 15
+
+    #Battery Temperature
+  - platform: rest
+    resource: http://[IP]/rest/items/sajhybrid_powermeter_94_[SN]_battery_temperature"
+    name: Ampere Battery Temerature
+    unique_id: ampere_battery_temperature
+    value_template: "{{ value_json.state[:-2] | float }}"
+    unit_of_measurement: °C
+    device_class: Temperature
+    scan_interval: 15
