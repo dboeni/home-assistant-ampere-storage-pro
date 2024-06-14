@@ -172,45 +172,6 @@ modbus:
         scale: 1
         scan_interval: 10
 
-      - name: L1 active power
-        unique_id: l1_active_power
-        device_address: !secret ampere-storage-pro-device-address
-        address: 1349
-        input_type: input
-        data_type: int16
-        precision: 0
-        unit_of_measurement: W
-        device_class: power
-        state_class: measurement
-        scale: 1
-        scan_interval: 10
-
-      - name: L2 active power
-        unique_id: l2_active_power
-        device_address: !secret ampere-storage-pro-device-address
-        address: 1350
-        input_type: input
-        data_type: int16
-        precision: 0
-        unit_of_measurement: W
-        device_class: power
-        state_class: measurement
-        scale: 1
-        scan_interval: 10
-
-      - name: L3 active power
-        unique_id: l3_active_power
-        device_address: !secret ampere-storage-pro-device-address
-        address: 1351
-        input_type: input
-        data_type: int16
-        precision: 0
-        unit_of_measurement: W
-        device_class: power
-        state_class: measurement
-        scale: 1
-        scan_interval: 10
-
       - name: Daily PV Generation
         unique_id: ampere_daily_pv_generation
         device_address: !secret ampere-storage-pro-device-address
@@ -413,6 +374,202 @@ modbus:
         data_type: string
         count: 9
         scan_interval: 600
+
+      - name: L1 active power
+        unique_id: l1_active_power
+        device_address: !secret ampere-storage-pro-device-address
+        address: 1349
+        input_type: input
+        data_type: int16
+        precision: 0
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        scale: 1
+        scan_interval: 10
+
+      - name: L1 Grid Current
+        unique_id: l1_grid_current
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16434
+        input_type: input
+        data_type: int16
+        precision: 2
+        unit_of_measurement: A
+        device_class: Current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 60
+  
+      - name: L1 Grid active voltage
+        unique_id: l1_grid_active_voltage
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16433
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: V
+        device_class: Voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 60
+
+      - name: L1 Grid Freq
+        unique_id: l1_grid_freq
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16435
+        input_type: input
+        data_type: uint16
+        precision: 2
+        unit_of_measurement: Hz
+        device_class: Frequency
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 60
+
+      - name: L1 Grid DCI
+        unique_id: l1_grid_dci
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16434
+        input_type: input
+        data_type: int16
+        precision: 2
+        unit_of_measurement: A
+        device_class: Current
+        state_class: measurement
+        scale: 1000
+        scan_interval: 60
+
+      - name: L2 active power
+        unique_id: l2_active_power
+        device_address: !secret ampere-storage-pro-device-address
+        address: 1350
+        input_type: input
+        data_type: int16
+        precision: 0
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        scale: 1
+        scan_interval: 10
+
+      - name: L2 Grid Current
+        unique_id: l2_grid_current
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16441
+        input_type: input
+        data_type: int16
+        precision: 2
+        unit_of_measurement: A
+        device_class: Current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 60
+  
+      - name: L2 Grid active voltage
+        unique_id: l2_grid_active_voltage
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16440
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: V
+        device_class: Voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 60
+
+      - name: L2 Grid Freq
+        unique_id: l2_grid_freq
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16442
+        input_type: input
+        data_type: uint16
+        precision: 2
+        unit_of_measurement: Hz
+        device_class: Frequency
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 60
+
+      - name: L2 Grid DCI
+        unique_id: l2_grid_dci
+        device_address: !secret ampere-storage-pro-device-address
+        address: 164443
+        input_type: input
+        data_type: int16
+        precision: 2
+        unit_of_measurement: A
+        device_class: Current
+        state_class: measurement
+        scale: 1000
+        scan_interval: 60
+
+      - name: L3 active power
+        unique_id: l3_active_power
+        device_address: !secret ampere-storage-pro-device-address
+        address: 1351
+        input_type: input
+        data_type: int16
+        precision: 0
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        scale: 1
+        scan_interval: 10
+
+      - name: L3 Grid Current
+        unique_id: l3_grid_current
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16448
+        input_type: input
+        data_type: int16
+        precision: 2
+        unit_of_measurement: A
+        device_class: Current
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 60
+  
+      - name: L3 Grid active voltage
+        unique_id: l3_grid_active_voltage
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16447
+        input_type: input
+        data_type: uint16
+        precision: 1
+        unit_of_measurement: V
+        device_class: Voltage
+        state_class: measurement
+        scale: 0.1
+        scan_interval: 60
+
+      - name: L3 Grid Freq
+        unique_id: l3_grid_freq
+        device_address: !secret ampere-storage-pro-device-address
+        address: 16449
+        input_type: input
+        data_type: uint16
+        precision: 2
+        unit_of_measurement: Hz
+        device_class: Frequency
+        state_class: measurement
+        scale: 0.01
+        scan_interval: 60
+
+      - name: L3 Grid DCI
+        unique_id: l3_grid_dci
+        device_address: !secret ampere-storage-pro-device-address
+        address: 164450
+        input_type: input
+        data_type: int16
+        precision: 2
+        unit_of_measurement: A
+        device_class: Current
+        state_class: measurement
+        scale: 1000
+        scan_interval: 60
+
 
 template:
   - sensor:
