@@ -54,6 +54,17 @@ sensor:
     state_class: measurement
     scan_interval: 15
 
+  #Total solar energy in kWh
+  - platform: rest
+    resource: http://[IP]/rest/items/sajhybrid_inverter_94_[SN]_inverter_pvEnergy
+    name: Ampere Inverter PvEnergy
+    unique_id: ampere_inverter_pvEnergy
+    value_template: '{{ value_json.state | regex_replace("([^\d.]+)","") | float }}'
+    unit_of_measurement: "kWh"
+    device_class: energy
+    state_class: total_increasing
+    scan_interval: 15
+
   #State Of Charge Battery in %
   - platform: rest
     resource: http://[IP]/rest/items/sajhybrid_battery_94_[SN]_battery_stateOfCharge
