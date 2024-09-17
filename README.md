@@ -3,6 +3,7 @@ An easy-to-use YAML-based integration for several Ampere.Storage.Pro inverters f
 There are two ways to read the data from an Ampere.Storage.Pro. Both options are explained here.
 - Variant 1: Via Modbus
 - Variant 2: Via Rest (the Ampere.IQ Box is required here)
+- Variant 3: Custom Integration over HACS [link](https://github.com/dboeni/home-assistant-ampere-storage-pro-modbus)
 
 # Requirements:
 - HomeAssistant with Visual Studio Server or File Editor Addon
