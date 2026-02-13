@@ -2,7 +2,7 @@ An easy-to-use YAML-based integration for several Ampere.Storage.Pro inverters f
 
 There are two ways to read the data from an Ampere.Storage.Pro. Both options are explained here.
 - Variant 1: Via Modbus
-- Variant 2: Via Rest (the Ampere.IQ Box is required here)
+- ~~Variant 2: Via Rest (the Ampere.IQ Box is required here)~~
 - Variant 3: Custom Integration over HACS [link](https://github.com/dboeni/home-assistant-ampere-storage-pro-modbus)
 
 # Requirements:
@@ -14,10 +14,14 @@ The inverter can be read out via Modbus TCP (port 502).
 Add or update the values from secrets.yaml to your Home Assistant.
 
 # Variant 2:
-The Ampere.IQ Box can be read out via a REST interface.
-The following placeholders must be replaced in the [rest_ampere_storage_pro.yaml](rest_ampere_storage_pro.yaml) file:
-- [IP]: Ip address of the Ampere.IQ Box
-- [SN]: Serial number of the inverter. This can be read out using this REST URL: http://[IP]/rest/things
+> With an update to Ampere.IQ, reading via the REST API is no longer permanently possible, as a session token is required when retrieving data. This session is only valid for approximately 3 days after logging in via the UI.
+> 
+> Therefore, this option is no longer supported.
+
+~~The Ampere.IQ Box can be read out via a REST interface.~~  
+~~The following placeholders must be replaced in the [rest_ampere_storage_pro.yaml](rest_ampere_storage_pro.yaml) file:~~  
+~~- [IP]: Ip address of the Ampere.IQ Box~~  
+~~- [SN]: Serial number of the inverter. This can be read out using this REST URL: http://[IP]/rest/things~~  
 
 # Integrate into HomeAssistant
 Copy the YAML file of the selected variant into the "integrations" directory.
